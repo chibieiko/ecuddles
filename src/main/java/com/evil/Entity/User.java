@@ -1,15 +1,15 @@
 package com.evil.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO Short Description
@@ -24,8 +24,7 @@ import javax.persistence.Id;
 @Data
 @ToString(exclude = "password")
 @Entity
-public class Admin {
-
+public class User {
     public static final PasswordEncoder PASSWORD_ENCODER = new
             BCryptPasswordEncoder();
 
@@ -33,22 +32,32 @@ public class Admin {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @JsonIgnore
+    @Column(name = "password", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @Column(name = "role", nullable = false)
+    @JsonIgnore
     private String role;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Product> shoppingCartProducts = new ArrayList<>();
 
     public void setPassword(String password) {
         this.password = PASSWORD_ENCODER.encode(password);
     }
 
-    public Admin() {
+    public User() {
     }
 
-    public Admin(String name, String password, String role) {
+    public User(String email, String name, String password, String role) {
+        this.email = email;
         this.name = name;
         this.setPassword(password);
         this.role = role;

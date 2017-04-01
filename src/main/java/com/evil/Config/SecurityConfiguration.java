@@ -1,6 +1,6 @@
 package com.evil.Config;
 
-import com.evil.Entity.Admin;
+import com.evil.Entity.User;
 import com.evil.Service.SpringDataJpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -33,21 +33,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws
             Exception {
         auth.userDetailsService(this.userDetailsService).passwordEncoder
-                (Admin.PASSWORD_ENCODER);
+                (User.PASSWORD_ENCODER);
     }
 
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().permitAll()
                 .antMatchers(HttpMethod.DELETE, "/api/products/**").hasRole
                 ("ADMIN")
+                .antMatchers("/api/cart/**").authenticated()
+                .anyRequest().permitAll()
                 .and()
             .formLogin()
-                .defaultSuccessUrl("/", true)
+                .usernameParameter("email")
+                .loginProcessingUrl("/api/login")
+                .defaultSuccessUrl("/api", true)
                 .permitAll()
                 .and()
             .csrf().disable()
             .logout()
-                .logoutSuccessUrl("/");
+                .logoutUrl("/api/logout")
+                .logoutSuccessUrl("/api");
     }
  }

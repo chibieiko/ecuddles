@@ -24,7 +24,8 @@ public class Product {
     @Column(name = "name", nullable = false)
     private String name;
 
-  /*  private String description;
+    /*
+    private String description;
     private float price;
     private String fabric;
     private String filling;
@@ -35,7 +36,8 @@ public class Product {
     private float weight;
     private String disposeInstruction;
     private int stock;
-    private String color;*/
+    private String color;
+    */
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
             "product")

@@ -1,9 +1,12 @@
 package com.evil.Repository;
 
 
-import com.evil.Entity.Admin;
+import com.evil.Entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+import java.util.Optional;
 
 /**
  * TODO Short Description
@@ -16,9 +19,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  */
 
 @RepositoryRestResource(exported = false)
-public interface AdminRepository extends Repository<Admin, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
+    User save(User user);
 
-    Admin save(Admin admin);
-
-    Admin findByName(String name);
+    User findByEmail(String email);
 }
