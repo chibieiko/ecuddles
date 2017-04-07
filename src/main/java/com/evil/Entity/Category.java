@@ -1,5 +1,12 @@
 package com.evil.Entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
+
 /**
  * TODO Short Description
  * <p>
@@ -9,10 +16,17 @@ package com.evil.Entity;
  * @version 2017.0328
  * @since 1.7
  */
+@Entity
+@Data
+@NoArgsConstructor
+public class Category {
+    @Id
+    @GeneratedValue
+    @Column(length = 4)
+    private int id;
 
-public enum Category {
+    private String name;
 
-    DIGIMON, POKEMON, ANIMAL, REPTILE, DINOSAUR, HUMAN
-
-
+    @ManyToMany(targetEntity = Product.class, mappedBy = "categories")
+    private List<Product> products;
 }

@@ -6,6 +6,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * TODO Short Description
@@ -46,13 +47,8 @@ public class Product {
     @OneToMany(cascade=CascadeType.ALL)
     private List<Picture> pictures;
 
-    /*
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "ProductCategories", joinColumns = @JoinColumn
-            (name = "id"))
-    @Column(name = "category", nullable = false)
-    @Enumerated(EnumType.ORDINAL)
-    private List<Category> categories;*/
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<Category> categories;
 
     private Product() {}
 
