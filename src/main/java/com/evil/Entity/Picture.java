@@ -25,10 +25,6 @@ public class Picture {
     private String url;
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Product.class)
-    @JoinColumn(name = "product_id")//, referencedColumnName = "id")
-    private Product product;
-
     public Picture() {
     }
 

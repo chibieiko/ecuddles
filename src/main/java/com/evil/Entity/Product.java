@@ -1,6 +1,7 @@
 package com.evil.Entity;
 
 import lombok.Data;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -41,9 +42,11 @@ public class Product {
     */
 
     /*, fetch=FetchType.LAZY, */
-    @OneToMany(mappedBy="product", cascade=CascadeType.ALL)
+    //@RestResource(exported = false)
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Picture> pictures;
-/*
+
+    /*
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "ProductCategories", joinColumns = @JoinColumn
             (name = "id"))
