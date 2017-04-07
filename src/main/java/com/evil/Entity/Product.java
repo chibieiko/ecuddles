@@ -19,6 +19,7 @@ import java.util.List;
 @Data
 @Entity
 public class Product {
+
     private @Id @GeneratedValue Long id;
 
     @Column(name = "name", nullable = false)
@@ -39,8 +40,8 @@ public class Product {
     private String color;
     */
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
-            "product")
+    /*, fetch=FetchType.LAZY, */
+    @OneToMany(mappedBy="product", cascade=CascadeType.ALL)
     private List<Picture> pictures;
 /*
     @ElementCollection(fetch = FetchType.EAGER)
@@ -54,12 +55,13 @@ public class Product {
 
     public Product(String name) {
         this.name = name;
-        //this.pictures = pictures;
+     //   this.pictures = pictures;
        // this.categories = categories;
-
+/*
         this.pictures = new ArrayList<Picture>(){{
             add(new Picture("moikka.com", "moimoi", Product.this));
             add(new Picture("hoikka.com", "hoihoi", Product.this));
         }};
+        */
     }
 }

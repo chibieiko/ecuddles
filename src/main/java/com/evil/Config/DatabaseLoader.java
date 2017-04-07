@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
  * @since 1.7
  */
 
+// Creates dummydata when server is launched.
+
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 

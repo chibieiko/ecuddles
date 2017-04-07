@@ -25,8 +25,8 @@ public class Picture {
     private String url;
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Product.class)
+    @JoinColumn(name = "product_id")//, referencedColumnName = "id")
     private Product product;
 
     public Picture() {
@@ -35,6 +35,6 @@ public class Picture {
     public Picture(String url, String description, Product product) {
         this.url = url;
         this.description = description;
-        this.product = product;
+        //this.product = product;
     }
 }

@@ -38,10 +38,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .anyRequest().permitAll()
                 .antMatchers(HttpMethod.DELETE, "/api/products/**").hasRole
                 ("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/products/**").hasRole
+                ("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/products/**").hasRole
+                ("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/products/**").hasRole
+                ("ADMIN")
                 .antMatchers("/api/cart/**").authenticated()
-                .anyRequest().permitAll()
                 .and()
             .formLogin()
                 .usernameParameter("email")
