@@ -25,5 +25,5 @@ import java.util.List;
  */
 
 @RepositoryRestResource(excerptProjection = ProductListingProjection.class)
-public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
+public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
 }

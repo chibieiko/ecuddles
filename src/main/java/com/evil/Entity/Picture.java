@@ -1,6 +1,7 @@
 package com.evil.Entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -16,21 +17,18 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Picture {
 
     @Id
     @GeneratedValue
     private long id;
 
+    @Column(nullable = false)
     private String url;
+
     private String description;
 
-    public Picture() {
-    }
-
-    public Picture(String url, String description, Product product) {
-        this.url = url;
-        this.description = description;
-        //this.product = product;
-    }
+    @Column(nullable = false)
+    private boolean primary;
 }

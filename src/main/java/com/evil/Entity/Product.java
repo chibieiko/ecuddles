@@ -1,6 +1,7 @@
 package com.evil.Entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
@@ -20,35 +21,54 @@ import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Product {
+    private @Id @GeneratedValue int id;
 
-    private @Id @GeneratedValue Long id;
-
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    /*
+    @Column(nullable = false, length = 10000)
     private String description;
-    private float price;
+
+    @Column(nullable = false, precision = 2)
+    private double price;
+
+    @Column(nullable = false, length = 100)
     private String fabric;
+
+    @Column(nullable = false, length = 100)
     private String filling;
+
+    @Column(length = 50)
     private String designer;
-    private float height;
-    private float width;
-    private float length;
-    private float weight;
+
+    @Column(nullable = false, precision = 2)
+    private double height;
+
+    @Column(nullable = false, precision = 2)
+    private double width;
+
+    @Column(nullable = false, precision = 2)
+    private double length;
+
+    @Column(nullable = false, precision = 2)
+    private double weight;
+
+    @Column(nullable = false)
     private String disposeInstruction;
+
+    @Column(nullable = false)
     private int stock;
+
+    @Column(nullable = false, length = 50)
     private String color;
-    */
 
     @OneToMany(cascade=CascadeType.ALL)
     private List<Picture> pictures;
 
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Category> categories;
-
-    private Product() {}
 
     public Product(String name) {
         this.name = name;
