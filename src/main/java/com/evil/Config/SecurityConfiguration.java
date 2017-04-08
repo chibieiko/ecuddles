@@ -1,7 +1,6 @@
 package com.evil.Config;
 
 import com.evil.Entity.User;
-import com.evil.Service.SpringDataJpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * TODO Short Description
@@ -37,27 +37,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest().permitAll()
-                .antMatchers(HttpMethod.DELETE, "/api/products/**").hasRole
-                ("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/products/**").hasRole
-                ("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/products/**").hasRole
-                ("ADMIN")
-                .antMatchers(HttpMethod.PATCH, "/api/products/**").hasRole
-                ("ADMIN")
-                .antMatchers("/api/cart/**").authenticated()
+        http.csrf().disable().authorizeRequests()
+                .mvcMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                .mvcMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/register").permitAll()
+                .anyRequest().hasAuthority("ADMIN")
                 .and()
-            .formLogin()
-                .usernameParameter("email")
-                .loginProcessingUrl("/api/login")
-                .defaultSuccessUrl("/api", true)
-                .permitAll()
-                .and()
-            .csrf().disable()
-            .logout()
-                .logoutUrl("/api/logout")
-                .logoutSuccessUrl("/api");
+                // We filter the api/login requests
+                .addFilterBefore(new JWTLoginFilter("/api/login", authenticationManager()),
+                        UsernamePasswordAuthenticationFilter.class)
+                // And filter other requests to check the presence of JWT in header
+                .addFilterBefore(new JWTAuthenticationFilter(),
+                        UsernamePasswordAuthenticationFilter.class)
+                .logout().disable();
     }
  }

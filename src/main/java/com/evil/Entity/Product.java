@@ -42,8 +42,6 @@ public class Product {
     private String color;
     */
 
-    /*, fetch=FetchType.LAZY, */
-    //@RestResource(exported = false)
     @OneToMany(cascade=CascadeType.ALL)
     private List<Picture> pictures;
 
@@ -54,13 +52,5 @@ public class Product {
 
     public Product(String name) {
         this.name = name;
-     //   this.pictures = pictures;
-       // this.categories = categories;
-/*
-        this.pictures = new ArrayList<Picture>(){{
-            add(new Picture("moikka.com", "moimoi", Product.this));
-            add(new Picture("hoikka.com", "hoihoi", Product.this));
-        }};
-        */
     }
 }

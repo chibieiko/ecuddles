@@ -1,4 +1,4 @@
-package com.evil.Service;
+package com.evil.Config;
 
 import com.evil.Entity.User;
 import com.evil.Repository.UserRepository;
