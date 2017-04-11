@@ -104,7 +104,7 @@ public class MockData {
         product.setWidth((double)getRandom(doubles));
         product.setLength((double)getRandom(doubles));
         product.setWeight((double)getRandom(doubles));
-        product.setDisposeInstruction((String)getRandom(disposingInstructions));
+        product.setDisposeInstructions((String)getRandom(disposingInstructions));
         product.setStock((int)getRandom(ints));
         product.setColor((String)getRandom(colors));
         product.setCareInstructions((String)getRandom(careInstructions));

@@ -8,7 +8,7 @@ import java.util.List;
 public interface ProductListingProjection {
     int getId();
     String getName();
+    double getPrice();
     // todo only first picture
     List<Picture> getPictures();
-    double getPrice();
 }

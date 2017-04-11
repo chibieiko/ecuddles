@@ -56,7 +56,7 @@ public class Product {
     private double weight;
 
     @Column(nullable = false)
-    private String disposeInstruction;
+    private String disposeInstructions;
 
     @Column(nullable = false)
     private int stock;
