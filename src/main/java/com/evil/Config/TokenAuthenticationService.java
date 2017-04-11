@@ -57,7 +57,7 @@ public class TokenAuthenticationService {
 
             User user = userRepository.findByEmail(email);
 
-            return email != null ?
+            return email != null && user != null ?
                     new UsernamePasswordAuthenticationToken(email, user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole())) :
                     null;
         }
