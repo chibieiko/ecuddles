@@ -8,7 +8,7 @@ import javax.persistence.*;
 /**
  * TODO Short Description
  * <p>
- * TODO description and @since
+ * TODO caption and @since
  *
  * @author Erika Sankari
  * @version 2017.0331
@@ -27,8 +27,5 @@ public class Picture {
     @Column(nullable = false)
     private String url;
 
-    private String description;
-
-    @Column(nullable = false)
-    private boolean primary;
+    private String caption;
 }

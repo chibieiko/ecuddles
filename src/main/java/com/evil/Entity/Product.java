@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * TODO Short Description
  * <p>
- * TODO description and @since
+ * TODO caption and @since
  *
  * @author Erika Sankari
  * @version 2017.0328
@@ -64,10 +64,13 @@ public class Product {
     @Column(nullable = false, length = 50)
     private String color;
 
+    @Column(nullable = false)
+    private String careInstructions;
+
     @OneToMany(cascade=CascadeType.ALL)
     private List<Picture> pictures;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.MERGE)
     private List<Category> categories;
 
     public Product(String name) {
