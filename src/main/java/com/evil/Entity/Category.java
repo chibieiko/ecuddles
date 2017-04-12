@@ -22,7 +22,6 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue
-    @Column(length = 4)
     private int id;
 
     private String name;

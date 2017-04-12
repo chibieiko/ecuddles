@@ -72,8 +72,4 @@ public class Product {
 
     @ManyToMany(cascade=CascadeType.MERGE)
     private List<Category> categories;
-
-    public Product(String name) {
-        this.name = name;
-    }
 }
