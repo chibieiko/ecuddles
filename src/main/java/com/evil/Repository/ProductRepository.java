@@ -18,7 +18,6 @@ import org.springframework.data.rest.core.annotation.RestResource;
  * @version 2017.0328
  * @since 1.7
  */
-
 @RepositoryRestResource(excerptProjection = ProductListingProjection.class)
 public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
 
