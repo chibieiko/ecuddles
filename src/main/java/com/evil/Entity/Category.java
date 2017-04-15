@@ -1,11 +1,14 @@
 package com.evil.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.List;
-import java.util.Set;
 
 /**
  * TODO Short Description
@@ -26,6 +29,7 @@ public class Category {
 
     private String name;
 
+    @JsonBackReference
     @ManyToMany(targetEntity = Product.class, mappedBy = "categories")
     private List<Product> products;
 }

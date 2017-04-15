@@ -42,6 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/register").permitAll()
+                .mvcMatchers("/api/products/*/reviews").authenticated()
+                .mvcMatchers("/api/cart/**").authenticated()
                 .anyRequest().hasAuthority("ADMIN")
                 .and()
                 // We filter the api/login requests

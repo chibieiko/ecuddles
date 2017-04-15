@@ -1,17 +1,23 @@
 package com.evil.Controller;
 
 import com.evil.Entity.Product;
+import com.evil.Entity.PurchaseLogEntry;
+import com.evil.Entity.ShoppingCartItem;
 import com.evil.Entity.User;
+import com.evil.Exception.OutOfStockException;
+import com.evil.Repository.ProductRepository;
+import com.evil.Repository.PurchaseLogEntryRepository;
+import com.evil.Repository.ShoppingCartItemRepository;
 import com.evil.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,14 +26,103 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/cart")
 public class ShoppingCartController {
-
     @Autowired
     private UserRepository users;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Product> getCart() {
-        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @Autowired
+    private ProductRepository products;
 
-        return users.findByEmail(user.getUsername()).getShoppingCartProducts();
+    @Autowired
+    private PurchaseLogEntryRepository log;
+
+    @Autowired
+    private ShoppingCartItemRepository cart;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<ShoppingCartItem> getCart() {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return users.findByEmail(email).getShoppingCartProducts();
+    }
+
+    @RequestMapping(path = "/checkout", method = RequestMethod.GET)
+    public ResponseEntity<?> checkout() {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user = users.findByEmail(email);
+
+        List<ShoppingCartItem> userCart = user.getShoppingCartProducts();
+
+        for (ShoppingCartItem shoppingCartItem : userCart) {
+            if (shoppingCartItem.getQuantity() > shoppingCartItem.getProduct().getStock()) {
+                throw new OutOfStockException();
+            }
+        }
+
+        Date now = new Date();
+
+        for (ShoppingCartItem shoppingCartItem : userCart) {
+            Product product = shoppingCartItem.getProduct();
+            product.setStock(product.getStock() - shoppingCartItem.getQuantity());
+            products.save(product);
+
+            PurchaseLogEntry entry = new PurchaseLogEntry();
+            entry.setProduct(shoppingCartItem.getProduct());
+            entry.setQuantity(shoppingCartItem.getQuantity());
+            entry.setUser(user);
+            entry.setBought(now);
+            log.save(entry);
+        }
+
+        userCart.clear();
+
+        users.save(user);
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(path = "/modify", method = RequestMethod.GET)
+    public ResponseEntity<ShoppingCartItem> modifyCart
+            (@RequestParam(name = "product") int productId,
+             @RequestParam(name = "quantity") int quantity) throws Exception {
+
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user = users.findByEmail(email);
+
+        List<ShoppingCartItem> userCart = user.getShoppingCartProducts();
+
+        if (productId == -1) {
+            userCart.clear();
+        } else {
+            Product product = products.findOne(productId);
+
+            if (quantity <= 0) {
+                userCart.removeIf(shoppingCartItem -> shoppingCartItem.getProduct() == product);
+            } else {
+                if (product.getStock() < quantity) {
+                    throw new OutOfStockException();
+                }
+
+                boolean updated = false;
+                for (ShoppingCartItem shoppingCartItem : userCart) {
+                    if (shoppingCartItem.getProduct() == product) {
+                        shoppingCartItem.setQuantity(quantity);
+                        updated = true;
+                    }
+                }
+
+                if (!updated) {
+                    ShoppingCartItem item = new ShoppingCartItem();
+                    item.setQuantity(quantity);
+                    item.setProduct(product);
+                    cart.save(item);
+                    userCart.add(item);
+                }
+            }
+        }
+
+        users.save(user);
+
+        return ResponseEntity.ok().build();
     }
 }
