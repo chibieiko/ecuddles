@@ -46,6 +46,7 @@ public class User {
     @JsonIgnore
     private String role;
 
+    @JsonIgnore
     @OneToMany
     private List<ShoppingCartItem> shoppingCartProducts;
 

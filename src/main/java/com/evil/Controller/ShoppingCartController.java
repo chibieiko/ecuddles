@@ -1,9 +1,12 @@
 package com.evil.Controller;
 
 import com.evil.Entity.Product;
+import com.evil.Entity.PurchaseLogEntry;
 import com.evil.Entity.ShoppingCartItem;
 import com.evil.Entity.User;
+import com.evil.Exception.OutOfStockException;
 import com.evil.Repository.ProductRepository;
+import com.evil.Repository.PurchaseLogEntryRepository;
 import com.evil.Repository.ShoppingCartItemRepository;
 import com.evil.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +31,9 @@ public class ShoppingCartController {
 
     @Autowired
     private ProductRepository products;
+
+    @Autowired
+    private PurchaseLogEntryRepository log;
 
     @Autowired
     private ShoppingCartItemRepository cart;
@@ -46,9 +53,28 @@ public class ShoppingCartController {
 
         List<ShoppingCartItem> userCart = user.getShoppingCartProducts();
 
+        for (ShoppingCartItem shoppingCartItem : userCart) {
+            if (shoppingCartItem.getQuantity() > shoppingCartItem.getProduct().getStock()) {
+                throw new OutOfStockException();
+            }
+        }
 
+        Date now = new Date();
 
-        //userCart.clear();
+        for (ShoppingCartItem shoppingCartItem : userCart) {
+            Product product = shoppingCartItem.getProduct();
+            product.setStock(product.getStock() - shoppingCartItem.getQuantity());
+            products.save(product);
+
+            PurchaseLogEntry entry = new PurchaseLogEntry();
+            entry.setProduct(shoppingCartItem.getProduct());
+            entry.setQuantity(shoppingCartItem.getQuantity());
+            entry.setUser(user);
+            entry.setBought(now);
+            log.save(entry);
+        }
+
+        userCart.clear();
 
         users.save(user);
         return ResponseEntity.ok().build();
@@ -73,6 +99,10 @@ public class ShoppingCartController {
             if (quantity <= 0) {
                 userCart.removeIf(shoppingCartItem -> shoppingCartItem.getProduct() == product);
             } else {
+                if (product.getStock() < quantity) {
+                    throw new OutOfStockException();
+                }
+
                 boolean updated = false;
                 for (ShoppingCartItem shoppingCartItem : userCart) {
                     if (shoppingCartItem.getProduct() == product) {

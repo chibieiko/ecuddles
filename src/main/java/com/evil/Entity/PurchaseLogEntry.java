@@ -3,10 +3,7 @@ package com.evil.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -20,11 +17,13 @@ public class PurchaseLogEntry {
     @GeneratedValue
     private long id;
 
-    @OneToMany
+    @ManyToOne
     private User user;
 
-    @OneToMany
+    @ManyToOne
     private Product product;
+
+    private int quantity;
 
     private Date bought;
 }
