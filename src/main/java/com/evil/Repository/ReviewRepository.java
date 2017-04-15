@@ -2,6 +2,7 @@ package com.evil.Repository;
 
 import com.evil.Entity.Review;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
  * TODO Short Description
@@ -14,6 +15,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 
 // todo projectiot, jos haluu
+@RepositoryRestResource(exported = false)
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Long> {
 
 }

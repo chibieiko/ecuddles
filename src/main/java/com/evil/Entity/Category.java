@@ -29,6 +29,7 @@ public class Category {
 
     private String name;
 
+    @JsonBackReference
     @ManyToMany(targetEntity = Product.class, mappedBy = "categories")
     @JsonBackReference
     private List<Product> products;

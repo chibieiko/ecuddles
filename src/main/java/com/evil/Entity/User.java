@@ -33,6 +33,7 @@ public class User {
     private Long id;
 
     @Column(name = "email", nullable = false, unique = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String email;
 
     @Column(name = "name", nullable = false)
