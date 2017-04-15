@@ -72,4 +72,7 @@ public class Product {
 
     @ManyToMany(cascade=CascadeType.MERGE)
     private List<Category> categories;
+
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<Review> reviews;
 }
