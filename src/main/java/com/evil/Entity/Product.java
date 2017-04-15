@@ -74,4 +74,7 @@ public class Product {
     @JsonManagedReference
     @ManyToMany(cascade=CascadeType.MERGE)
     private List<Category> categories;
+
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<Review> reviews;
 }
