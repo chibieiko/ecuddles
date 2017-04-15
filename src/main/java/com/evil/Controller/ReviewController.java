@@ -45,8 +45,7 @@ public class ReviewController {
     public ResponseEntity<Review> postReviews(@RequestBody Review review,
                                      @PathVariable("id") int id) {
 
-        String userdetails = (String) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
+        String userdetails = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findByEmail(userdetails);
         Product product = productRepository.findOne(id);
 
