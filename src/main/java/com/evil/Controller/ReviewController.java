@@ -3,6 +3,7 @@ package com.evil.Controller;
 import com.evil.Entity.Product;
 import com.evil.Entity.Review;
 import com.evil.Entity.User;
+import com.evil.Exception.IllegalReviewException;
 import com.evil.Repository.ProductRepository;
 import com.evil.Repository.ReviewRepository;
 import com.evil.Repository.UserRepository;
@@ -54,7 +55,7 @@ public class ReviewController {
             // review.
             for (Review review1 : product.getReviews()) {
                 if (review1.getUser().getId() == user.getId()) {
-                    throw
+                    throw new IllegalReviewException();
                 }
             }
         }
@@ -71,6 +72,6 @@ public class ReviewController {
         // save product.
         productRepository.save(product);
 
-        return null;
+        return ResponseEntity.status(201).body(review);
     }
 }
