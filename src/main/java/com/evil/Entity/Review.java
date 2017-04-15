@@ -1,5 +1,9 @@
 package com.evil.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,15 +30,10 @@ public class Review {
 
     private String title;
 
-    @ManyToOne(targetEntity = Product.class)
-    private Product product;
+    @ManyToOne
+    private User user;
 
-    /*
     private String body;
 
     private int stars;
-    */
-
-   /* @OneToMany(cascade= CascadeType.ALL)
-    private User user;*/
 }

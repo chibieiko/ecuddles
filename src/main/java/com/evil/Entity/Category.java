@@ -1,5 +1,6 @@
 package com.evil.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +27,7 @@ public class Category {
 
     private String name;
 
+    @JsonBackReference
     @ManyToMany(targetEntity = Product.class, mappedBy = "categories")
     private List<Product> products;
 }
