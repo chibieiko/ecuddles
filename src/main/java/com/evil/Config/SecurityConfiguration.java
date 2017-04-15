@@ -42,7 +42,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/register").permitAll()
+                .mvcMatchers("/api/cart/**").authenticated()
                 .anyRequest().hasAuthority("ADMIN")
+                //.mvcMatchers(HttpMethod.GET, "/api/cart/**").hasAuthority("ADMIN")
                 .and()
                 // We filter the api/login requests
                 .addFilterBefore(new JWTLoginFilter("/api/login", authenticationManager()),
