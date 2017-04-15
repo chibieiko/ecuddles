@@ -46,8 +46,9 @@ public class User {
     @JsonIgnore
     private String role;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Product> shoppingCartProducts = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany
+    private List<ShoppingCartItem> shoppingCartProducts;
 
     public void setPassword(String password) {
         this.password = PASSWORD_ENCODER.encode(password);
