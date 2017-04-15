@@ -31,6 +31,5 @@ public class Category {
 
     @JsonBackReference
     @ManyToMany(targetEntity = Product.class, mappedBy = "categories")
-    @JsonBackReference
     private List<Product> products;
 }

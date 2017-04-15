@@ -68,7 +68,6 @@ public class Product {
     @OneToMany(cascade=CascadeType.ALL)
     private List<Picture> pictures;
 
-    @JsonManagedReference
     @ManyToMany(cascade=CascadeType.MERGE)
     private List<Category> categories;
 
