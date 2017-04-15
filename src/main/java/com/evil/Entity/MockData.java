@@ -87,6 +87,19 @@ public class MockData {
         return randomList;
     }
 
+    private static List<Review> getReviewList(List<Review> list) {
+        ArrayList<Review> randomList = new ArrayList<>();
+        int size = (int) (Math.random() * list.size());
+        for (int i = 0; i < size; i++) {
+            int randomObject = (int) (Math.random() * list.size());
+            if (!randomList.contains(list.get(randomObject))) {
+                randomList.add(list.get(randomObject));
+            }
+        }
+
+        return randomList;
+    }
+
     private static Object getRandom(Object[] objects) {
         return objects[(int)(Math.random()*objects.length)];
     }
@@ -109,7 +122,15 @@ public class MockData {
         product.setColor((String)getRandom(colors));
         product.setCareInstructions((String)getRandom(careInstructions));
         product.setCategories(getRandomCategoryList(categoryList));
+        /*
+        ArrayList<Review> reviewList = new ArrayList<Review>(){{
+            add(getReview("testi"));
+            add(getReview("Tää on toinen testi"));
+            add(getReview("Kolmeas testi"));
+        }};
 
+        product.setReviews(reviewList);
+*/
         ArrayList<Picture> pictureList = new ArrayList<Picture>(){{
             add(getPicture());
             add(getPicture());
@@ -128,6 +149,13 @@ public class MockData {
         return category;
     }
 
+    public static Review getReview(String title) {
+        Review review = new Review();
+        review.setTitle(title);
+
+        return review;
+    }
+
     public static Picture getPicture() {
         Picture picture = new Picture();
         picture.setCaption((String)getRandom(captions));
@@ -135,5 +163,4 @@ public class MockData {
 
         return picture;
     }
-
 }

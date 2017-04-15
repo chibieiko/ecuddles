@@ -3,12 +3,9 @@ package com.evil.Entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * TODO Short Description
@@ -71,7 +68,9 @@ public class Product {
     @OneToMany(cascade=CascadeType.ALL)
     private List<Picture> pictures;
 
-    @JsonManagedReference
     @ManyToMany(cascade=CascadeType.MERGE)
     private List<Category> categories;
+
+    @OneToMany
+    private List<Review> reviews;
 }
