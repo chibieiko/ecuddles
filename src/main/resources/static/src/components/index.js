@@ -1,6 +1,6 @@
-import Test from './ui/Test';
+import ProductAdder from './containers/ProductAdder';
 
 export const App = () =>
     <div>
-        <Test/>
+        <ProductAdder/>
     </div>;

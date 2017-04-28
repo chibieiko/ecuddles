@@ -1,5 +1,6 @@
 const constants = {
-    ADD_REVIEW: "ADD_REVIEW"
+    BUY_PRODUCT: "BUY_PRODUCT",
+    ADD_PRODUCT: "ADD_PRODUCT"
 };
 
 export default constants;
