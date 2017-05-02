@@ -1,6 +1,6 @@
-import ProductAdder from './containers/ProductAdder';
+import ProductLister from './containers/ProductLister';
 
 export const App = () =>
     <div>
-        <ProductAdder/>
+        <ProductLister/>
     </div>;

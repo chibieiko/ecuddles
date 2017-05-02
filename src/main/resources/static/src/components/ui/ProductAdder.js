@@ -6,7 +6,7 @@ export default class ProductAdder extends Component {
 
         this.state = {
             productName: "",
-            productId: Math.floor(Math.random()*100000)
+            productId: Math.floor(Math.random() * 100000)
         }
     };
 
