@@ -40,7 +40,19 @@ public class TokenAuthenticationService {
         res.addHeader("Content-Type", "application/json");
 
         try {
-            res.getOutputStream().print("{\"token\": \"" + JWT + "\"}");
+            User user = userRepository.findByEmail(email);
+
+            String responseBody = "{" +
+                    "\"token\": \"" + JWT + "\"," +
+                    "\"user\": {" +
+                    "\"email\": \"" + user.getEmail() + "\"," +
+                    "\"name\": \"" + user.getName() + "\"," +
+                    "\"role\": \"" + user.getRole() + "\"," +
+                    "\"id\": \"" + user.getId() + "\"" +
+                    "}" +
+                    "}";
+
+            res.getOutputStream().print(responseBody);
         } catch (IOException e) {
             e.printStackTrace();
         }
