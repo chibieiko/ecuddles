@@ -23,6 +23,8 @@ import java.util.List;
 public class Product {
     private @Id @GeneratedValue int id;
 
+    //todo add date
+
     @Column(nullable = false)
     private String name;
 

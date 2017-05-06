@@ -1,6 +1,7 @@
 package com.evil.Config;
 
 import com.evil.Entity.User;
+import com.evil.Exception.TokenException;
 import com.evil.Repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,7 +27,7 @@ public class TokenAuthenticationService {
         TokenAuthenticationService.userRepository = repository;
     }
 
-    static final long EXPIRATIONTIME = 864_000_000; // 10 days
+    static final long EXPIRATIONTIME =10000; // 864_000_000; // 10 days
     static final String SECRET = "J3247Fb4389rhf377JEW01";
     static final String HEADER_STRING = "Authorization";
 
@@ -61,11 +62,18 @@ public class TokenAuthenticationService {
     static Authentication getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
-            String email = Jwts.parser()
-                    .setSigningKey(SECRET)
-                    .parseClaimsJws(token)
-                    .getBody()
-                    .getSubject();
+
+            String email = "";
+
+            try {
+                email = Jwts.parser()
+                        .setSigningKey(SECRET)
+                        .parseClaimsJws(token)
+                        .getBody()
+                        .getSubject();
+            } catch (Exception e) {
+                throw new TokenException();
+            }
 
             User user = userRepository.findByEmail(email);
 
