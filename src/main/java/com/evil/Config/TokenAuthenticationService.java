@@ -27,7 +27,7 @@ public class TokenAuthenticationService {
         TokenAuthenticationService.userRepository = repository;
     }
 
-    static final long EXPIRATIONTIME =10000; // 864_000_000; // 10 days
+    static final long EXPIRATIONTIME = 864_000_000; // 10 days
     static final String SECRET = "J3247Fb4389rhf377JEW01";
     static final String HEADER_STRING = "Authorization";
 
