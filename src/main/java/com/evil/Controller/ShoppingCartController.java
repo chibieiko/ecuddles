@@ -83,7 +83,7 @@ public class ShoppingCartController {
     @RequestMapping(path = "/modify", method = RequestMethod.GET)
     public ResponseEntity<ShoppingCartItem> modifyCart
             (@RequestParam(name = "product") int productId,
-             @RequestParam(name = "quantity") int quantity) throws Exception {
+             @RequestParam(name = "quantity") int quantity) throws OutOfStockException {
 
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -106,6 +106,10 @@ public class ShoppingCartController {
                 boolean updated = false;
                 for (ShoppingCartItem shoppingCartItem : userCart) {
                     if (shoppingCartItem.getProduct() == product) {
+                        if (product.getStock() < shoppingCartItem.getQuantity() + quantity) {
+                            throw new OutOfStockException();
+                        }
+
                         shoppingCartItem.setQuantity(quantity);
                         updated = true;
                     }
