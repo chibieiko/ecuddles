@@ -106,10 +106,6 @@ public class ShoppingCartController {
                 boolean updated = false;
                 for (ShoppingCartItem shoppingCartItem : userCart) {
                     if (shoppingCartItem.getProduct() == product) {
-                        if (product.getStock() < shoppingCartItem.getQuantity() + quantity) {
-                            throw new OutOfStockException();
-                        }
-
                         shoppingCartItem.setQuantity(quantity);
                         updated = true;
                     }
