@@ -50,8 +50,8 @@ public class DatabaseLoader implements CommandLineRunner {
 
         if (generateMockdata) {
             // Create and persist categories.
-            String[] categorynames = {"Pehmeä", "Kova", "Digimon", "Pokémon",
-            "Eläin", "Nalle", "Pupu", "Kettu"};
+            String[] categorynames = {"New", "Soft", "Hard", "Digimon", "Pokémon",
+            "Animal", "Teddy bear", "Bunny", "Fox"};
 
             ArrayList<Category> categories = new ArrayList<Category>(){{
                 for (String categoryname : categorynames) {
@@ -62,7 +62,7 @@ public class DatabaseLoader implements CommandLineRunner {
             categoryRepository.save(categories);
 
             // Create and persist Products.
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 200; i++) {
                 Product product = MockData.getProduct(categories);
                 repository.save(product);
             }
