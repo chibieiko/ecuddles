@@ -46,7 +46,11 @@ public class ShoppingCartController {
     }
 
     @RequestMapping(path = "/checkout", method = RequestMethod.GET)
-    public ResponseEntity<?> checkout() {
+    public ResponseEntity<?> checkout(@RequestParam(name = "name") String name,
+                                      @RequestParam(name = "address") String address,
+                                      @RequestParam(name = "postalCode") String postalCode,
+                                      @RequestParam(name = "city") String city,
+                                      @RequestParam(name = "phone") String phone) {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = users.findByEmail(email);
@@ -70,6 +74,13 @@ public class ShoppingCartController {
             entry.setProduct(shoppingCartItem.getProduct());
             entry.setQuantity(shoppingCartItem.getQuantity());
             entry.setUser(user);
+
+            entry.setName(name);
+            entry.setAddress(address);
+            entry.setPostalCode(postalCode);
+            entry.setCity(city);
+            entry.setPhone(phone);
+
             entry.setBought(now);
             log.save(entry);
         }
