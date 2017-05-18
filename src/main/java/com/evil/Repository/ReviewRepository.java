@@ -14,7 +14,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  * @since 1.7
  */
 
-// todo projectiot, jos haluu
 @RepositoryRestResource(exported = false)
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Long> {
 

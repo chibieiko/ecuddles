@@ -23,4 +23,5 @@ public interface ProductInspectionProjection {
     String getCareInstructions();
     List<Picture> getPictures();
     List<Category> getCategories();
+    List<Review> getReviews();
 }

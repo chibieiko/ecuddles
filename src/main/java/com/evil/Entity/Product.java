@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,7 +24,8 @@ import java.util.List;
 public class Product {
     private @Id @GeneratedValue int id;
 
-    //todo add date
+    @Column(nullable = false)
+    private Date date = new Date();
 
     @Column(nullable = false)
     private String name;
