@@ -1,13 +1,10 @@
 package com.evil.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * TODO Short Description
@@ -36,4 +33,6 @@ public class Review {
     private String body;
 
     private int stars;
+
+    private Date date = new Date();
 }
