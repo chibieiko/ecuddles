@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -30,6 +27,6 @@ public class Category {
     private String name;
 
     @JsonBackReference
-    @ManyToMany(targetEntity = Product.class, mappedBy = "categories")
+    @ManyToMany(targetEntity = Product.class, mappedBy = "categories", cascade = CascadeType.REMOVE)
     private List<Product> products;
 }
