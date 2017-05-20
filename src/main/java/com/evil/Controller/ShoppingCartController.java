@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -65,6 +67,8 @@ public class ShoppingCartController {
 
         Date now = new Date();
 
+        List<ShoppingCartItem> removeItems = new ArrayList<>();
+
         for (ShoppingCartItem shoppingCartItem : userCart) {
             Product product = shoppingCartItem.getProduct();
             product.setStock(product.getStock() - shoppingCartItem.getQuantity());
@@ -83,11 +87,18 @@ public class ShoppingCartController {
 
             entry.setBought(now);
             log.save(entry);
+            removeItems.add(shoppingCartItem);
         }
 
+        List<ShoppingCartItem> cartCopy = userCart.subList(0, userCart.size());
         userCart.clear();
 
         users.save(user);
+
+        for (ShoppingCartItem removeItem : removeItems) {
+            cart.delete(removeItem);
+        }
+
         return ResponseEntity.ok().build();
     }
 
