@@ -10,6 +10,8 @@ import java.util.Date;
  */
 @Projection(name = "list", types = { PurchaseLogEntry.class })
 public interface LogProjection {
+    long getId();
+
     int getQuantity();
 
     Date getBought();
