@@ -45,6 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and().authorizeRequests()
+                .mvcMatchers("/*").permitAll()
+                .mvcMatchers("/assets/**").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/login").permitAll()

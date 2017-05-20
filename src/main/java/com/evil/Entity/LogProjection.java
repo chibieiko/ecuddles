@@ -11,13 +11,28 @@ import java.util.Date;
 @Projection(name = "list", types = { PurchaseLogEntry.class })
 public interface LogProjection {
     int getQuantity();
+
     Date getBought();
+
     @Value("#{target.getProduct().getId()}")
     int getProductId();
+
     @Value("#{target.getProduct().getName()}")
     String getProductName();
+
     @Value("#{target.getUser().getId()}")
     int getUserId();
-    @Value("#{target.getUser().getName()}")
-    String getUserName();
+
+    @Value("#{target.getUser().getEmail()}")
+    String getUserEmail();
+
+    String getName();
+
+    String getAddress();
+
+    String getCity();
+
+    String getPostalCode();
+
+    String getPhone();
 }
