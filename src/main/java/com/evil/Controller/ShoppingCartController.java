@@ -90,7 +90,6 @@ public class ShoppingCartController {
             removeItems.add(shoppingCartItem);
         }
 
-        List<ShoppingCartItem> cartCopy = userCart.subList(0, userCart.size());
         userCart.clear();
 
         users.save(user);
@@ -113,13 +112,26 @@ public class ShoppingCartController {
 
         List<ShoppingCartItem> userCart = user.getShoppingCartProducts();
 
+        List<ShoppingCartItem> removeFromCart = new ArrayList<>();
+
         if (productId == -1) {
+            for (ShoppingCartItem shoppingCartItem : userCart) {
+                removeFromCart.add(shoppingCartItem);
+            }
+
             userCart.clear();
         } else {
             Product product = products.findOne(productId);
 
             if (quantity <= 0) {
-                userCart.removeIf(shoppingCartItem -> shoppingCartItem.getProduct() == product);
+                userCart.removeIf(shoppingCartItem -> {
+                    if (shoppingCartItem.getProduct() == product) {
+                        removeFromCart.add(shoppingCartItem);
+                        return true;
+                    }
+
+                    return false;
+                });
             } else {
                 if (product.getStock() < quantity) {
                     throw new OutOfStockException();
@@ -144,6 +156,10 @@ public class ShoppingCartController {
         }
 
         users.save(user);
+
+        for (ShoppingCartItem removeItem : removeFromCart) {
+            cart.delete(removeItem);
+        }
 
         return ResponseEntity.ok().build();
     }
