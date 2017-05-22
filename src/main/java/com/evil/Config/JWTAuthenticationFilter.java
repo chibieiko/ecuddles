@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Implements filter for JWT authentication.
  *
- * @author Vili Kinnunen & Erika Sankari
+ * @author Vili Kinnunen and Erika Sankari
  * @version 2017.2205
  * @since 1.7
  */

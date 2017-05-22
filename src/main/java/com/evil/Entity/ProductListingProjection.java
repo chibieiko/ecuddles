@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Implements projection for listing of products.
  *
- * @author Vili Kinnunen & Erika Sankari
+ * @author Vili Kinnunen and Erika Sankari
  * @version 2017.2205
  * @since 1.7
  */

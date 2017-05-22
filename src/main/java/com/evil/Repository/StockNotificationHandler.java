@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 /**
  * Implements repository event handler to send emails on stock updates.
  *
- * @author Vili Kinnunen & Erika Sankari
+ * @author Vili Kinnunen and Erika Sankari
  * @version 2017.2205
  * @since 1.7
  */

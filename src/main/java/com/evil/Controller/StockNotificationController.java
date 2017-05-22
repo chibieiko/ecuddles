@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Implements controller for stock notifications.
  *
- * @author Vili Kinnunen & Erika Sankari
+ * @author Vili Kinnunen and Erika Sankari
  * @version 2017.2205
  * @since 1.7
  */
