@@ -10,16 +10,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by vili on 01/04/2017.
+ * Implements controller for registration.
+ *
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
+ * @since 1.7
  */
-
 @RestController
 @RequestMapping(path = "/api/register")
 public class RegistrationController {
 
+    /**
+     * User repository.
+     */
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * Adds new user to the database.
+     *
+     * @param user  User to add
+     * @return      Added user
+     */
     @RequestMapping(method = RequestMethod.POST)
     public User registerNewUser(@RequestBody User user) {
         user.setRole("USER");

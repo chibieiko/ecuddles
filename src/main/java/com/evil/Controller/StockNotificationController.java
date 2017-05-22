@@ -10,22 +10,42 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by vili on 01/04/2017.
+ * Implements controller for stock notifications.
+ *
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
+ * @since 1.7
  */
 @RestController
 @RequestMapping(path = "/api/notifications/{product}")
 public class StockNotificationController {
+
+    /**
+     * User repository.
+     */
     @Autowired
     private UserRepository users;
 
+    /**
+     * Product repository.
+     */
     @Autowired
     private ProductRepository products;
 
+    /**
+     * Stock notification repository.
+     */
     @Autowired
     private StockNotificationRepository notifications;
 
+    /**
+     * Adds notification for a product.
+     *
+     * @param productId     Product ID to add notification for
+     * @return              Response
+     */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> getCart(@PathVariable("product") int productId) {
+    public ResponseEntity<?> addNotification(@PathVariable("product") int productId) {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = users.findByEmail(email);
         Product product = products.findOne(productId);

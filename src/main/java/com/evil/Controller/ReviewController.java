@@ -17,28 +17,41 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * TODO Short Description
- * <p>
- * TODO description and @since
+ * Implements controller for reviews.
  *
- * @author Erika Sankari
- * @version 2017.0415
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
  * @since 1.7
  */
-
 @RequestMapping(path="/api/products/{id}/reviews")
 @RestController
 public class ReviewController {
 
+    /**
+     * User repository.
+     */
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Product repository.
+     */
     @Autowired
     private ProductRepository productRepository;
 
+    /**
+     * Review repository.
+     */
     @Autowired
     private ReviewRepository reviewRepository;
 
+    /**
+     * Adds new review to a product.
+     *
+     * @param review    Review
+     * @param id        Id of the product
+     * @return          Added review
+     */
     @RequestMapping(method = RequestMethod.POST, consumes =
             MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -75,6 +88,12 @@ public class ReviewController {
         return ResponseEntity.status(201).body(review);
     }
 
+    /**
+     * Deletes review from a product.
+     *
+     * @param id    Id of the review
+     * @return      Deleted review
+     */
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<Review> deleteReview(@PathVariable("id") int id) {
 
