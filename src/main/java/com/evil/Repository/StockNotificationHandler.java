@@ -20,19 +20,36 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Created by vili on 15/04/2017.
+ * Implements repository event handler to send emails on stock updates.
+ *
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
+ * @since 1.7
  */
-
 @Component
 @RepositoryEventHandler(Product.class)
 public class StockNotificationHandler {
 
+    /**
+     * Email service.
+     */
     @Autowired
     EmailService emailService;
 
+    /**
+     * Notification repository.
+     */
     @Autowired
     StockNotificationRepository notifications;
 
+    /**
+     * Handles saving of products.
+     *
+     * <p>
+     * Sends email notifications when necessary.
+     *
+     * @param product Product that was saved
+     */
     @HandleAfterSave
     public void handleProductSave(Product product) {
         System.out.println(product.getStock());

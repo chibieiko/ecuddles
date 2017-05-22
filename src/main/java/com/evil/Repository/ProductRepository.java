@@ -11,22 +11,31 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 /**
- * TODO Short Description
- * <p>
- * TODO caption and @since
+ * Implements repository for products.
  *
- * @author Erika Sankari
- * @version 2017.0328
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
  * @since 1.7
  */
 @RepositoryRestResource(excerptProjection = ProductListingProjection.class)
 public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
 
-    // Enables search of products by product name.
+    /**
+     * Enables search of products by name.
+     *
+     * @param name  Name
+     * @param p     Page
+     * @return      Page
+     */
     @RestResource(path = "/contains",rel="nameContaining")
     public Page findByNameContaining(@Param("name") String name, Pageable p);
 
-    // Enables search of products by category id.
+    /**
+     * Enables search of products by category id.
+     * @param id    Category id
+     * @param p     Page
+     * @return      Page
+     */
     @RestResource(path = "/has",rel="productCategory")
     @Query(value="select p from Product p inner join p.categories category on " +
             "category.id = :categoryid")

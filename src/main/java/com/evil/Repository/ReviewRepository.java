@@ -5,15 +5,12 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
- * TODO Short Description
- * <p>
- * TODO description and @since
+ * Implements repository for reviews of a product.
  *
- * @author Erika Sankari
- * @version 2017.0415
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
  * @since 1.7
  */
-
 @RepositoryRestResource(exported = false)
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Long> {
 
