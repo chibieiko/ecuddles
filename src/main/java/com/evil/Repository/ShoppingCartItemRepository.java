@@ -5,7 +5,11 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
- * Created by vili on 15/04/2017.
+ * Implements repository for shopping cart items.
+ *
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
+ * @since 1.7
  */
 @RepositoryRestResource(exported = false)
 public interface ShoppingCartItemRepository extends PagingAndSortingRepository<ShoppingCartItem, Integer> {

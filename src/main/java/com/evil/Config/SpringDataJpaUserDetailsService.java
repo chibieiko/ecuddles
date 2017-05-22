@@ -10,25 +10,36 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 /**
- * TODO Short Description
- * <p>
- * TODO caption and @since
+ * Implements user details service.
  *
- * @author Erika Sankari
- * @version 2017.0328
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
  * @since 1.7
  */
-
 @Component
 public class SpringDataJpaUserDetailsService implements UserDetailsService {
 
+    /**
+     * User repository.
+     */
     private final UserRepository repository;
 
+    /**
+     * Initializes user repository variable.
+     * @param repository
+     */
     @Autowired
     public SpringDataJpaUserDetailsService(UserRepository repository) {
         this.repository = repository;
     }
 
+    /**
+     * Loads user details by email address.
+     *
+     * @param email                         Email
+     * @return                              User details
+     * @throws UsernameNotFoundException    Exception
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws
             UsernameNotFoundException {

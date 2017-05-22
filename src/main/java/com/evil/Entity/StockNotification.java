@@ -6,19 +6,33 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
- * Created by vili on 15/04/2017.
+ * Implements data class for stock notification entity.
+ *
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
+ * @since 1.7
  */
 @Entity
 @Data
 @NoArgsConstructor
 public class StockNotification {
+
+    /**
+     * Id of the stock notification.
+     */
     @Id
     @GeneratedValue
     private int id;
 
+    /**
+     * Product to subscribe for.
+     */
     @ManyToOne
     private Product product;
 
+    /**
+     * User to notify.
+     */
     @ManyToOne
     private User user;
 }

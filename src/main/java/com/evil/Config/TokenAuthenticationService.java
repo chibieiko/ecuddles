@@ -6,10 +6,8 @@ import com.evil.Repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security
-        .authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
@@ -18,19 +16,52 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * Implements authentication service for JWT tokens.
+ *
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
+ * @since 1.7
+ */
 @Component
 public class TokenAuthenticationService {
+
+    /**
+     * User repository.
+     */
     private static UserRepository userRepository;
 
+    /**
+     * Initializes user repository variable.
+     *
+     * @param repository    User repository
+     */
     @Autowired
     public TokenAuthenticationService(UserRepository repository) {
         TokenAuthenticationService.userRepository = repository;
     }
 
+    /**
+     * Expiration time of the token.
+     */
     static final long EXPIRATIONTIME = 864_000_000; // 10 days
+
+    /**
+     * Secret of the token.
+     */
     static final String SECRET = "J3247Fb4389rhf377JEW01";
+
+    /**
+     * Header of the token.
+     */
     static final String HEADER_STRING = "Authorization";
 
+    /**
+     * Adds authentication to the response based on the email supplied.
+     *
+     * @param res       Response
+     * @param email     Email of the authenticated user
+     */
     static void addAuthentication(HttpServletResponse res, String email) {
         String JWT = Jwts.builder()
                 .setSubject(email)
@@ -59,6 +90,12 @@ public class TokenAuthenticationService {
         }
     }
 
+    /**
+     * Gets authentication of a request.
+     *
+     * @param request   Request
+     * @return          Authentication of the request
+     */
     static Authentication getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {

@@ -1,9 +1,12 @@
 package com.evil.Config;
 
-import com.evil.Entity.*;
+import com.evil.Entity.Category;
+import com.evil.Entity.MockData;
+import com.evil.Entity.Product;
+import com.evil.Entity.User;
 import com.evil.Repository.CategoryRepository;
-import com.evil.Repository.UserRepository;
 import com.evil.Repository.ProductRepository;
+import com.evil.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -11,24 +14,37 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 /**
- * TODO Short Description
- * <p>
- * TODO caption and @since
+ * Generates dummy data for database on startup.
  *
- * @author Erika Sankari
- * @version 2017.0328
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
  * @since 1.7
  */
-
-// Creates dummydata when server is launched.
-
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
+    /**
+     * Product repository.
+     */
     private final ProductRepository repository;
+
+    /**
+     * User repository.
+     */
     private final UserRepository userRepository;
+
+    /**
+     * Category repository.
+     */
     private final CategoryRepository categoryRepository;
 
+    /**
+     * Initializes repository fields.
+     *
+     * @param repository            Product repository
+     * @param userRepository        User repository
+     * @param categoryRepository    Category repository
+     */
     @Autowired
     public DatabaseLoader(ProductRepository repository, UserRepository
             userRepository, CategoryRepository categoryRepository) {
@@ -37,6 +53,12 @@ public class DatabaseLoader implements CommandLineRunner {
         this.categoryRepository = categoryRepository;
     }
 
+    /**
+     * Runs dummy data generation to database.
+     *
+     * @param strings       Strings
+     * @throws Exception    Thrown when exception occurs
+     */
     @Override
     public void run(String... strings) throws Exception {
         boolean generateMockdata = true;

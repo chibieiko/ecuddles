@@ -6,9 +6,12 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
- * Created by vili on 07/04/2017.
+ * Implements repository for categories.
+ *
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
+ * @since 1.7
  */
-
 @RepositoryRestResource(excerptProjection = CategoryListingProjection.class)
 public interface CategoryRepository extends PagingAndSortingRepository<Category, Integer>{
 }

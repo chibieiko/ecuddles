@@ -23,23 +23,45 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by vili on 01/04/2017.
+ * Implements controller for shopping cart.
+ *
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
+ * @since 1.7
  */
 @RestController
 @RequestMapping(path = "/api/cart")
 public class ShoppingCartController {
+
+    /**
+     * User repository.
+     */
     @Autowired
     private UserRepository users;
 
+    /**
+     * Product repository.
+     */
     @Autowired
     private ProductRepository products;
 
+    /**
+     * Purchase log entry repository.
+     */
     @Autowired
     private PurchaseLogEntryRepository log;
 
+    /**
+     * Shopping cart item repository.
+     */
     @Autowired
     private ShoppingCartItemRepository cart;
 
+    /**
+     * Gets contents of the shopping cart.
+     *
+     * @return  Contents of the shopping cart
+     */
     @RequestMapping(method = RequestMethod.GET)
     public List<ShoppingCartItem> getCart() {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -47,6 +69,16 @@ public class ShoppingCartController {
         return users.findByEmail(email).getShoppingCartProducts();
     }
 
+    /**
+     * Buys all the products in cart.
+     *
+     * @param name          Name of the buyer
+     * @param address       Address of the buyer
+     * @param postalCode    Postal code of the buyer
+     * @param city          City of the buyer
+     * @param phone         Phone of the buyer
+     * @return              Response
+     */
     @RequestMapping(path = "/checkout", method = RequestMethod.GET)
     public ResponseEntity<?> checkout(@RequestParam(name = "name") String name,
                                       @RequestParam(name = "address") String address,
@@ -90,7 +122,6 @@ public class ShoppingCartController {
             removeItems.add(shoppingCartItem);
         }
 
-        List<ShoppingCartItem> cartCopy = userCart.subList(0, userCart.size());
         userCart.clear();
 
         users.save(user);
@@ -102,6 +133,14 @@ public class ShoppingCartController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Modifies contents of the shopping cart.
+     *
+     * @param productId             Product ID to modify, if -1, clears the cart
+     * @param quantity              New quantity for the product, if less than 1, removes the product
+     * @return                      Shopping cart item
+     * @throws OutOfStockException  Exception
+     */
     @RequestMapping(path = "/modify", method = RequestMethod.GET)
     public ResponseEntity<ShoppingCartItem> modifyCart
             (@RequestParam(name = "product") int productId,
@@ -113,13 +152,26 @@ public class ShoppingCartController {
 
         List<ShoppingCartItem> userCart = user.getShoppingCartProducts();
 
+        List<ShoppingCartItem> removeFromCart = new ArrayList<>();
+
         if (productId == -1) {
+            for (ShoppingCartItem shoppingCartItem : userCart) {
+                removeFromCart.add(shoppingCartItem);
+            }
+
             userCart.clear();
         } else {
             Product product = products.findOne(productId);
 
             if (quantity <= 0) {
-                userCart.removeIf(shoppingCartItem -> shoppingCartItem.getProduct() == product);
+                userCart.removeIf(shoppingCartItem -> {
+                    if (shoppingCartItem.getProduct() == product) {
+                        removeFromCart.add(shoppingCartItem);
+                        return true;
+                    }
+
+                    return false;
+                });
             } else {
                 if (product.getStock() < quantity) {
                     throw new OutOfStockException();
@@ -144,6 +196,10 @@ public class ShoppingCartController {
         }
 
         users.save(user);
+
+        for (ShoppingCartItem removeItem : removeFromCart) {
+            cart.delete(removeItem);
+        }
 
         return ResponseEntity.ok().build();
     }

@@ -6,26 +6,32 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
- * TODO Short Description
- * <p>
- * TODO caption and @since
+ * Implements data class for picture entity.
  *
- * @author Erika Sankari
- * @version 2017.0331
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
  * @since 1.7
  */
-
 @Data
 @Entity
 @NoArgsConstructor
 public class Picture {
 
+    /**
+     * Id of the picture.
+     */
     @Id
     @GeneratedValue
     private long id;
 
+    /**
+     * Url of the picture.
+     */
     @Column(nullable = false)
     private String url;
 
+    /**
+     * Caption of the picture.
+     */
     private String caption;
 }
