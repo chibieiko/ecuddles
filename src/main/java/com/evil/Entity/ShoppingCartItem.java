@@ -11,7 +11,7 @@ import javax.persistence.*;
 /**
  * Implements data class for shopping cart item entity.
  *
- * @author Vili Kinnunen & Erika Sankari
+ * @author Vili Kinnunen and Erika Sankari
  * @version 2017.2205
  * @since 1.7
  */

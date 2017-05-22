@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 /**
  * Implements repository for shopping cart items.
  *
- * @author Vili Kinnunen & Erika Sankari
+ * @author Vili Kinnunen and Erika Sankari
  * @version 2017.2205
  * @since 1.7
  */

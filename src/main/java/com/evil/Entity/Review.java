@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Implements data class for review entity.
  *
- * @author Vili Kinnunen & Erika Sankari
+ * @author Vili Kinnunen and Erika Sankari
  * @version 2017.2205
  * @since 1.7
  */

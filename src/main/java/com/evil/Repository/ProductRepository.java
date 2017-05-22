@@ -13,7 +13,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 /**
  * Implements repository for products.
  *
- * @author Vili Kinnunen & Erika Sankari
+ * @author Vili Kinnunen and Erika Sankari
  * @version 2017.2205
  * @since 1.7
  */

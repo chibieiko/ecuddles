@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Generates dummy data for database on startup.
  *
- * @author Vili Kinnunen & Erika Sankari
+ * @author Vili Kinnunen and Erika Sankari
  * @version 2017.2205
  * @since 1.7
  */
@@ -66,11 +66,12 @@ public class DatabaseLoader implements CommandLineRunner {
         try {
             this.userRepository.save(new User("admin@admin.com", "admin", "admin", "ADMIN"));
         } catch (Exception e) {
-            System.out.println("User already exists.");
+            System.out.println("Admin already exists. Mockdata generation will be skipped this time...");
             generateMockdata = false;
         }
 
         if (generateMockdata) {
+            System.out.println("Generating mockdata");
             // Create and persist categories.
             String[] categorynames = {"Soft", "Hard", "Digimon", "Pokémon",
             "Animal", "Teddy bear", "Bunny", "Fox", "Erika <3"};
@@ -89,5 +90,11 @@ public class DatabaseLoader implements CommandLineRunner {
                 repository.save(product);
             }
         }
+
+        System.out.println("######### WELCOME TO ECUDDLES! #########\n\n" +
+                "Admin user is: admin@admin.com, with password: admin\n\n" +
+                "Webstore is now hosted in http://localhost:8080/\n" +
+                "Admin has no separate interface, logging in with admin rights just reveals more operations in the store.\n\n" +
+                "REST interface starting point is http://localhost:8080/api");
     }
 }
