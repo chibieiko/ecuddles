@@ -8,24 +8,32 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * TODO Short Description
- * <p>
- * TODO caption and @since
+ * Implements data class for category entity.
  *
- * @author Erika Sankari
- * @version 2017.0328
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
  * @since 1.7
  */
 @Entity
 @Data
 @NoArgsConstructor
 public class Category {
+
+    /**
+     * Id of the category.
+     */
     @Id
     @GeneratedValue
     private int id;
 
+    /**
+     * Name of the category.
+     */
     private String name;
 
+    /**
+     * Products of the category.
+     */
     @JsonBackReference
     @ManyToMany(targetEntity = Product.class, mappedBy = "categories", cascade = CascadeType.REMOVE)
     private List<Product> products;
