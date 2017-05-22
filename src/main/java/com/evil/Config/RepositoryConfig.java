@@ -7,18 +7,20 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
 /**
- * TODO Short Description
- * <p>
- * TODO description and @since
+ * Configures repositories.
  *
- * @author Erika Sankari
- * @version 2017.0518
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
  * @since 1.7
  */
-
 @Configuration
 public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
 
+    /**
+     * Configures review and user repositories to expose IDs.
+     *
+     * @param config    Config
+     */
     @Override
     public void configureRepositoryRestConfiguration
             (RepositoryRestConfiguration config) {

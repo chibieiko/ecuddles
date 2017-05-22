@@ -1,10 +1,6 @@
 package com.evil.Config;
 
-import com.evil.Repository.UserRepository;
-import com.sun.javafx.fxml.expression.Expression;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.security.core.Authentication;
@@ -15,11 +11,26 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Arrays;
 
+/**
+ * Implements filter for JWT authentication.
+ *
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
+ * @since 1.7
+ */
 @Service
 public class JWTAuthenticationFilter extends GenericFilterBean {
 
+    /**
+     * Filters incoming requests to find out if they are authenticated.
+     *
+     * @param request           Request
+     * @param response          Response
+     * @param filterChain       Filter chain
+     * @throws IOException      Exception
+     * @throws ServletException Exception
+     */
     @Override
     public void doFilter(ServletRequest request,
                          ServletResponse response,

@@ -19,23 +19,29 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 /**
- * TODO Short Description
- * <p>
- * TODO caption and @since
+ * Implements security configuration for the app.
  *
- * @author Erika Sankari
- * @version 2017.0328
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
  * @since 1.7
  */
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    /**
+     * User details service.
+     */
     @Autowired
     private SpringDataJpaUserDetailsService userDetailsService;
 
+    /**
+     * Configures authentication manager.
+     *
+     * @param auth          Authentication manager builder
+     * @throws Exception    Exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws
             Exception {
@@ -43,6 +49,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 (User.PASSWORD_ENCODER);
     }
 
+    /**
+     * Configures Http Security of the app.
+     *
+     * @param http          HttpSecurity
+     * @throws Exception    Exception
+     */
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and().authorizeRequests()
                 .mvcMatchers("/*").permitAll()
@@ -65,11 +77,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout().disable();
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        //web.ignoring().mvcMatchers(HttpMethod.OPTIONS, "/**");
-    }
-
+    /**
+     * Configures CORS headers for all requests.
+     * @return  CORS configuration source
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
