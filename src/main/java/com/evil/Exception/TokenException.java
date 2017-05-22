@@ -4,12 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * TODO Short Description
- * <p>
- * TODO description and @since
+ * Implements exception for when token is malformed or expired.
  *
- * @author Erika Sankari
- * @version 2017.0506
+ * @author Vili Kinnunen & Erika Sankari
+ * @version 2017.2205
  * @since 1.7
  */
 @ResponseStatus(value=HttpStatus.UNAUTHORIZED, reason="Token might be " +
