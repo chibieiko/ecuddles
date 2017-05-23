@@ -28,7 +28,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
      * @return      Page
      */
     @RestResource(path = "/contains",rel="nameContaining")
-    public Page findByNameContaining(@Param("name") String name, Pageable p);
+    public Page findByNameContainingIgnoreCase(@Param("name") String name, Pageable p);
 
     /**
      * Enables search of products by category id.
