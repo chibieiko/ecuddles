@@ -95,7 +95,7 @@ public class DatabaseLoader implements CommandLineRunner {
                 "Admin user is: admin@admin.com, with password: admin\n\n" +
                 "Webstore is now hosted in http://localhost:8080/\n" +
                 "Admin has no separate interface, logging in with admin rights just reveals more operations in the store.\n\n" +
-                "REST interface starting point is http://localhost:8080/api\n" +
-                "######### END #########\n");
+                "REST interface starting point is http://localhost:8080/api\n\n" +
+                "################# END ##################\n");
     }
 }
